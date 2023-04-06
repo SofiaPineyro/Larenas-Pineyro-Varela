@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ArenaGestor.Domain\ArenaGestor.Domain.csproj" />
+    <ProjectReference Include="..\ArenaGestor.Extensions\ArenaGestor.Extensions.csproj" />
+  </ItemGroup>
+
+</Project>

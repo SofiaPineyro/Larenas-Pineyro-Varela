@@ -1,0 +1,34 @@
+<div class="container">
+    <header
+        class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <h1>Arenas Gestor</h1>
+        </a>
+
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li *ngFor="let option of menuOptions" class="nav-item" [routerLink]="option.link"
+                [ngClass]="{'dropdown': option.submenu}">
+                <a class="nav-link px-2 link-secondary" routerLinkActive="active"
+                    [ngClass]="{'dropdown-toggle': option.submenu}" id="navbarDropdownMenuLink"
+                    data-bs-toggle="dropdown" aria-expanded="false" role="button">
+                    {{option.text}}
+                </a>
+                <ul class="dropdown-menu" *ngIf="option.submenu" aria-labelledby="navbarDropdownMenuLink">
+                    <li *ngFor="let subitem of option.submenu">
+                        <a class="dropdown-item" [routerLink]="subitem.link">
+                            {{subitem.text}}
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="col-md-3 text-end" *ngIf="!isLogged">
+            <button type="button" class="btn btn-outline-primary me-2" routerLink="login">Ingresar</button>
+            <button type="button" class="btn btn-primary">Registrarse</button>
+        </div>
+        <div class="col-md-3 text-end" *ngIf="isLogged">
+            <app-user-info [User]="user"></app-user-info>
+        </div>
+    </header>
+</div>

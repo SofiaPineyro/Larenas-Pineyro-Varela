@@ -1,0 +1,16 @@
+<div class="dropdown text-end">
+    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
+        data-bs-toggle="dropdown" aria-expanded="false">
+        {{User!.name}} {{User!.surname}}
+    </a>
+    <ul class="dropdown-menu text-small dropdown-menu-end" aria-labelledby="dropdownUser1">
+        <li><a class="dropdown-item" routerLink="/misdatos">Mis datos</a></li>
+        <li><a class="dropdown-item" routerLink="/mistickets" *ngIf="isEspectador">Mis tickets</a></li>
+        <li><a class="dropdown-item" routerLink="/misconciertos" *ngIf="isArtista">Mis conciertos</a></li>
+        <li><a class="dropdown-item" routerLink="/cambiarcontrasena">Cambiar contraseña</a></li>
+        <li>
+            <hr class="dropdown-divider">
+        </li>
+        <li><a class="dropdown-item" (click)="Logout()">Salir</a></li>
+    </ul>
+</div>

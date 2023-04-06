@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ArenaGestor.Extensions">
+      <HintPath>C:\Users\frose\Desktop\Obligatorio Diseño\repo\codigo\ArenaGestor\ArenaGestor.Extensions\bin\Debug\net5.0\ArenaGestor.Extensions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

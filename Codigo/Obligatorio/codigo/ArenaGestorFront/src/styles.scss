@@ -1,0 +1,43 @@
+@import '~ngx-toastr/toastr';
+
+/* Importing Bootstrap SCSS file. */
+
+@import "~bootstrap/scss/bootstrap";
+
+/* Importing Datepicker SCSS file. */
+
+@import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
+
+html,
+body {
+    height: 100%;
+}
+
+.nav-link.active {
+    font-weight: bold;
+}
+
+a.btn-sm {
+    max-height: 32px;
+}
+
+.dropdown-list LI {
+    padding: 0px 10px !important;
+}
+
+.selected-item {
+    display: inherit;
+
+    span {
+        white-space: nowrap;
+    }
+}
+
+.card-header {
+    font-weight: bold;
+}
+
+.soldOut {
+    color: red;
+    font-size: 30px;
+}

@@ -1,0 +1,18 @@
+<main class="form-signin text-center m-auto" style="max-width: 500px;">
+    <form (ngSubmit)='Login()' #f='ngForm' novalidate>
+        <h3 class="h3 mb-3 fw-normal">Coloca tus datos para ingresar</h3>
+        <div class="alert alert-danger" role="alert" *ngIf="error" [innerHTML]="error">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Email</label>
+            <input type="email" class="form-control" placeholder="email" name='email' [(ngModel)]='user.email'
+                #emailModel='ngModel'>
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Contraseña</label>
+            <input [(ngModel)]="user.password" type="password" class="form-control" name='password'
+                [(ngModel)]='user.password' #passwordModel='ngModel'>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Login</button>
+    </form>
+</main>

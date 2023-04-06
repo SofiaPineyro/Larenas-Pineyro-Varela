@@ -1,0 +1,36 @@
+<div class="d-flex flex-row justify-content-between">
+    <div class="d-flex">
+        <h2>Solistas</h2>
+    </div>
+    <div class="align-self-center">
+        <input type="email" class="form-control" placeholder="Filter" name="filter" [(ngModel)]="filter"
+            #modelFilter="ngModel" (keyup)="GetData()">
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Genero</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Artista</th>
+            <th scope="col">Rol</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let soloist of soloistList">
+            <td>
+                <a type="button" class="btn btn-warning btn-sm ms-1"
+                    routerLink="/protagonistas/solistas/ver/{{soloist.musicalProtagonistId}}" role="button">Ver</a>
+            </td>
+            <td scope="col">{{soloist.musicalProtagonistId}}</td>
+            <td scope="col">{{soloist.name}}</td>
+            <td scope="col">{{soloist.gender.name}}</td>
+            <td scope="col">{{soloist.startDate|date:'dd/MM/YYYY'}}</td>
+            <td scope="col">{{soloist.artist.name}}</td>
+            <td scope="col">{{soloist.roleArtist.name}}</td>
+        </tr>
+    </tbody>
+</table>

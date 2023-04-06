@@ -1,0 +1,34 @@
+<div class="row justify-content-md-center">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                {{mode}} usuario
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" class="form-control" name="name" [(ngModel)]="model.name">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Apellido</label>
+                    <input type="text" class="form-control" name="surname" [(ngModel)]="model.surname">
+                </div>
+                <div class="mb-3" *ngIf="mode == 'Insertar'">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" [(ngModel)]="email">
+                </div>
+                <div class="mb-3" *ngIf="mode == 'Insertar'">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" [(ngModel)]="password">
+                </div>
+                <div class=" mb-3 ">
+                    <label class="form-label ">Roles</label>
+                    <ng-multiselect-dropdown [(ngModel)]="model.roles " [placeholder]=" 'Seleccionar' " [settings]="dropdownSettings " [data]="roleList ">
+                    </ng-multiselect-dropdown>
+                </div>
+                <button class="btn btn-primary btn-small " (click)="Confirmar() ">Confirmar</button>
+                <a routerLink='/administracion/usuarios' class="btn btn-danger btn-small ms-1 " role="button ">Volver</a>
+            </div>
+        </div>
+    </div>
+</div>

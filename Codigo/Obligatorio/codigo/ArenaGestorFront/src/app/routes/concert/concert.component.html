@@ -1,0 +1,67 @@
+<div class="d-flex flex-row justify-content-between">
+    <div class="d-flex">
+        <h2>Conciertos</h2>
+        <a class="btn btn-primary btn-sm ms-3" role="button"
+            routerLink="/administracion/conciertos/insertar"><span>Nuevo</span></a>
+    </div>
+    <div class="align-self-center">
+        <input type="text" class="form-control" placeholder="Filter tour name" name="filterTourName"
+            [(ngModel)]="filter.tourName" #modelFilter="ngModel" (keyup)="GetData()">
+        <select class="form-control" placeholder="Filter upcoming" name="filterUpcoming" [(ngModel)]="filter.upcoming"
+            (change)="GetData()">
+            <option [ngValue]="true">Próximos</option>
+            <option [ngValue]="false">Todos</option>
+        </select>
+        <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker name="filterStartDate"
+            [(ngModel)]="filter.dateRange.startDate" #modelFilter="ngModel" (ngModelChange)="GetData()"
+            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }">
+        <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker name="filterEndDate"
+            [(ngModel)]="filter.dateRange.endDate" #modelFilter="ngModel" (ngModelChange)="GetData()"
+            [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }">
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th scope="col">Id</th>
+            <th scope="col">Tour</th>
+            <th scope="col">Tickets</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let concert of concertsList">
+            <td>
+                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#deleteConcert" (click)="SetConcertToDelete(concert.concertId)">Borrar</button>
+                <a type="button" class="btn btn-warning btn-sm ms-1"
+                    routerLink="/administracion/conciertos/editar/{{concert.concertId}}" role="button">Editar</a>
+            </td>
+            <td scope="col">{{concert.concertId}}</td>
+            <td scope="col">{{concert.tourName}}</td>
+            <td scope="col">{{concert.ticketCount}}</td>
+            <td scope="col">{{concert.price}}</td>
+            <td scope="col">{{concert.date|date:'dd/MM/YYYY'}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="modal fade" id="deleteConcert" tabindex="-1" aria-labelledby="deleteConcertLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteConcertLabel">Borrar</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Estas seguro que deseas borrar este concierto?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" (click)="Delete();" data-bs-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

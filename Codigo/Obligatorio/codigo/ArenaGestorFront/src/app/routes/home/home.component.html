@@ -1,0 +1,40 @@
+<div class="d-flex flex-row justify-content-between">
+    <div class="d-flex">
+        <h2>Conciertos</h2>
+    </div>
+    <div class="align-self-center">
+        <input type="text" class="form-control" placeholder="Filter tour name" name="filterTourName" [(ngModel)]="filter.tourName" #modelFilter="ngModel" (keyup)="GetData()">
+
+        <select class="form-control" placeholder="Filter upcoming" name="filterUpcoming" [(ngModel)]="filter.upcoming" (change)="GetData()">
+            <option [ngValue]="true">Próximos</option>
+            <option [ngValue]="false">Todos</option>
+        </select>
+        <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker name="filterStartDate" [(ngModel)]="filter.dateRange.startDate" #modelFilter="ngModel" (ngModelChange)="GetData()" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }">
+        <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker name="filterEndDate" [(ngModel)]="filter.dateRange.endDate" #modelFilter="ngModel" (ngModelChange)="GetData()" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }">
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th scope="col">Id</th>
+            <th scope="col">Tour</th>
+            <th scope="col">Tickets</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let concert of concertsList">
+            <td>
+                <a type="button" class="btn btn-warning btn-sm ms-1" routerLink="/administracion/conciertos/ver/{{concert.concertId}}" role="button">Ver</a>
+                <a type="button" class="btn btn-success btn-sm ms-1" routerLink="/tickets/comprar/{{concert.concertId}}" role="button">Comprar tickets</a>
+            </td>
+            <td scope="col">{{concert.concertId}}</td>
+            <td scope="col">{{concert.tourName}}</td>
+            <td scope="col">{{concert.ticketCount}}</td>
+            <td scope="col">{{concert.price}}</td>
+            <td scope="col">{{concert.date|date:'dd/MM/YYYY'}}</td>
+        </tr>
+    </tbody>
+</table>

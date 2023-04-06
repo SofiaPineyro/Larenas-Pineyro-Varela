@@ -1,0 +1,72 @@
+<div class="row justify-content-md-center">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                Informacion
+            </div>
+            <div class="card-body">
+                <fieldset [disabled]="true" class="row">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input type="text" class="form-control" name="name" [(ngModel)]="model.name">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Fecha de inicio</label>
+                        <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker name="startDate"
+                            [(ngModel)]="model.startDate" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Genero</label>
+                        <input type="text" class="form-control" name="gender" [(ngModel)]="model.gender.name">
+                    </div>
+                    <div class="col-sm-12" *ngIf="model.artists && model.artists.length > 0">
+                        <label class="form-label ">Artistas</label>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Rol</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let artist of model.artists">
+                                    <td scope="col">{{artist.artistId}}</td>
+                                    <td scope="col">{{artist.name}}</td>
+                                    <td scope="col">{{artist.roleArtist.name}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-12" *ngIf="model.concerts && model.concerts.length > 0">
+                        <label class="form-label">Conciertos</label>
+                        <div style="font-weight: bold" class="row">
+                            <div class="col-sm-2">Id</div>
+                            <div class="col-sm-3">Tour</div>
+                            <div class="col-sm-2">Tickets</div>
+                            <div class="col-sm-2">Precio</div>
+                            <div class="col-sm-3">Fecha</div>
+                        </div>
+                        <div class="row" *ngFor="let concert of model.concerts">|
+                            <div class="row">
+                                <div class="col-sm-2">{{concert.concertId}}</div>
+                                <div class="col-sm-3">{{concert.tourName}}</div>
+                                <div class="col-sm-2">{{concert.ticketCount}}</div>
+                                <div class="col-sm-2">{{concert.price}}</div>
+                                <div class="col-sm-3">{{concert.date|date:'dd/MM/YYYY'}}</div>
+                            </div>
+                            <div style="font-size: 12px; background-color: #e2e2e2" class="row">
+                                <div class="col-sm-4">Lugar: {{concert.location.place}}</div>
+                                <div class="col-sm-4">Calle: {{concert.location.street}}</div>
+                                <div class="col-sm-2">Numero: {{concert.location.number}}</div>
+                                <div class="col-sm-2">Pais: {{concert.location.country.name}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <br>
+                <a routerLink='/protagonistas/bandas' class="btn btn-danger btn-small ms-1" role="button">Volver</a>
+            </div>
+        </div>
+    </div>
+</div>

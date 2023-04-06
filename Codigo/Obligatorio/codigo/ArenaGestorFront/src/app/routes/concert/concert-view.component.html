@@ -1,0 +1,107 @@
+<div class="row justify-content-md-center">
+    <div class="col-sm-10">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        {{mode}} concierto {{id}}
+                    </div>
+
+                    <div class="col-sm-6 soldOut" *ngIf="isSoldOut">
+                        SOLD OUT
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <fieldset [disabled]="true" class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <label class="form-label">Tour</label>
+                        <input type="text" class="form-control" name="tourName" [(ngModel)]="model.tourName">
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <label class="form-label">Fecha</label>
+                        <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker name="date"
+                            [(ngModel)]="model.date" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }">
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <label class="form-label">Ticket</label>
+                        <input type="text" class="form-control" name="ticketCount" [(ngModel)]="model.ticketCount">
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <label class="form-label">Precio</label>
+                        <input type="text" class="form-control" name="price" [(ngModel)]="model.price">
+                    </div>
+                    <div class="col-sm-12" *ngIf="bandList && bandList.length > 0">
+                        <label class="form-label ">Bandas</label>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Genero</th>
+                                    <th scope="col">Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let band of bandList">
+                                    <td scope="col">{{band.musicalProtagonistId}}</td>
+                                    <td scope="col">{{band.name}}</td>
+                                    <td scope="col">{{band.gender.name}}</td>
+                                    <td scope="col">{{band.startDate|date:'dd/MM/YYYY'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-12" *ngIf="soloistList && soloistList.length > 0">
+                        <label class="form-label ">Solistas</label>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Genero</th>
+                                    <th scope="col">Fecha</th>
+                                    <th scope="col">Artista</th>
+                                    <th scope="col">Rol</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let soloist of soloistList">
+                                    <td scope="col">{{soloist.musicalProtagonistId}}</td>
+                                    <td scope="col">{{soloist.name}}</td>
+                                    <td scope="col">{{soloist.gender.name}}</td>
+                                    <td scope="col">{{soloist.startDate|date:'dd/MM/YYYY'}}</td>
+                                    <td scope="col">{{soloist.artist.name}}</td>
+                                    <td scope="col">{{soloist.roleArtist.name}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <label class="form-label">Lugar</label>
+                        <input type="text" class="form-control" name="place" [(ngModel)]="model.location.place">
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <label class="form-label">Calle</label>
+                        <input type="text" class="form-control" name="street" [(ngModel)]="model.location.street">
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <label class="form-label">Numero</label>
+                        <input type="text" class="form-control" name="number" [(ngModel)]="model.location.number">
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <label class="form-label">Pais</label>
+                        <input type="text" class="form-control" name="number" [(ngModel)]="model.location.country.name">
+                    </div>
+                </fieldset>
+                <br>
+                <div *ngIf="!isArtist">
+                    <a routerLink='/home' class="btn btn-danger btn-small ms-1" role="button">Volver</a>
+                </div>
+                <div *ngIf="isArtist">
+                    <a routerLink='/misconciertos' class="btn btn-danger btn-small ms-1" role="button">Volver</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

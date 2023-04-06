@@ -1,0 +1,35 @@
+<div class="row justify-content-md-center">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                Importar/exportar conciertos
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Métodos</label>
+                    <select class="form-select" name="method" [(ngModel)]="method">
+                        <option *ngFor="let mehtodItem of methods" [value]="mehtodItem">{{mehtodItem}}</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Parámetro (Path, connectionstring, etc)</label>
+                    <input type="text" class="form-control" name="name" [(ngModel)]="path">
+                </div>
+                <button class="btn btn-primary btn-small" (click)="Importar()">Importar</button>
+                <button class="btn btn-primary btn-small ms-1" (click)="Exportar()">Exportar</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6" *ngIf="result">
+        <div class="alert alert-success" role="alert" *ngIf="result.insertedRecords>0">
+            Registros insertados: {{result.insertedRecords}}
+        </div>
+        <div class="alert alert-warning" role="alert" *ngIf="result.notInsertedRecords>0">
+            Registros no insertados: {{result.notInsertedRecords}}
+        </div>
+        <span *ngIf="result.notInsertedRecords>0">Errores</span>
+        <div class="alert alert-danger" role="alert" *ngFor="let message of result.messages">
+            {{message}}
+        </div>
+    </div>
+</div>

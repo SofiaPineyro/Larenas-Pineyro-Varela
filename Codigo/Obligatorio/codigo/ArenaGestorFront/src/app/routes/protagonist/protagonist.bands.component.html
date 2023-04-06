@@ -1,0 +1,32 @@
+<div class="d-flex flex-row justify-content-between">
+    <div class="d-flex">
+        <h2>Bandas</h2>
+    </div>
+    <div class="align-self-center">
+        <input type="email" class="form-control" placeholder="Filter" name="filter" [(ngModel)]="filter"
+            #modelFilter="ngModel" (keyup)="GetData()">
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Genero</th>
+            <th scope="col">Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let band of bandList">
+            <td>
+                <a type="button" class="btn btn-warning btn-sm ms-1"
+                    routerLink="/protagonistas/bandas/ver/{{band.musicalProtagonistId}}" role="button">Ver</a>
+            </td>
+            <td scope="col">{{band.musicalProtagonistId}}</td>
+            <td scope="col">{{band.name}}</td>
+            <td scope="col">{{band.gender.name}}</td>
+            <td scope="col">{{band.startDate|date:'dd/MM/YYYY'}}</td>
+        </tr>
+    </tbody>
+</table>

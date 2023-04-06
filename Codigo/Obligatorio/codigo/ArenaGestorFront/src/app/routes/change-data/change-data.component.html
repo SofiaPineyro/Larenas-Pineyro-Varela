@@ -1,0 +1,20 @@
+<div class="row justify-content-md-center">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                Change data
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Nombre</label>
+                    <input type="text" class="form-control" name="name" [(ngModel)]="model.name">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Apellido</label>
+                    <input type="text" class="form-control" name="surname" [(ngModel)]="model.surname">
+                </div>
+                <button class="btn btn-primary btn-small" (click)="Confirmar()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>

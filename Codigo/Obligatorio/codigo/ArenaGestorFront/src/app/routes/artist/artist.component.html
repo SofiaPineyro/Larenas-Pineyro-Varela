@@ -1,0 +1,49 @@
+<div class="d-flex flex-row justify-content-between">
+    <div class="d-flex">
+        <h2>Artista</h2>
+        <a class="btn btn-primary btn-sm ms-3" role="button" routerLink="/administracion/artistas/insertar">Nuevo</a>
+    </div>
+    <div class="align-self-center">
+        <input type="text" class="form-control" placeholder="Filter" name="filter" [(ngModel)]="filter"
+            #modelFilter="ngModel" (keyup)="GetData()">
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let artist of artistList">
+            <td>
+                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#deleteArtist" (click)="SetArtistToDelete(artist.artistId)">Borrar</button>
+                <a type="button" class="btn btn-warning btn-sm ms-1"
+                    routerLink="/administracion/artistas/editar/{{artist.artistId}}" role="button">Editar</a>
+            </td>
+            <td scope="col">{{artist.artistId}}</td>
+            <td scope="col">{{artist.name}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="modal fade" id="deleteArtist" tabindex="-1" aria-labelledby="deleteArtistLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteArtistLabel">Borrar</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Estas seguro que deseas borrar este artista?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" (click)="Delete();" data-bs-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

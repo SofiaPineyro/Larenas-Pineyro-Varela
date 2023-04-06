@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ArenaGestor.Business\ArenaGestor.Business.csproj" />
+    <ProjectReference Include="..\ArenaGestor.DataAccess\ArenaGestor.DataAccess.csproj" />
+    <ProjectReference Include="..\ArenaGestor.BusinessInterface\ArenaGestor.BusinessInterface.csproj" />
+  </ItemGroup>
+
+</Project>

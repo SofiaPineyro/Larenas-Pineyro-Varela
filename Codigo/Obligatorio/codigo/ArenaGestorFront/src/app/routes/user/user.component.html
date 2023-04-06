@@ -1,0 +1,58 @@
+<div class="d-flex flex-row justify-content-between">
+    <div class="d-flex">
+        <h2>Usuarios</h2>
+        <a class="btn btn-primary btn-sm ms-3" role="button"
+            routerLink="/administracion/usuarios/insertar"><span>Nuevo</span></a>
+    </div>
+    <div class="align-self-center">
+        <input type="text" class="form-control" placeholder="Filter name" name="filterName" [(ngModel)]="filter.name"
+            #modelFilter="ngModel" (keyup)="GetData()">
+        <input type="text" class="form-control" placeholder="Filter surname" name="filterSurname"
+            [(ngModel)]="filter.surname" #modelFilter="ngModel" (keyup)="GetData()">
+        <input type="text" class="form-control" placeholder="Filter email" name="filterEmail" [(ngModel)]="filter.email"
+            #modelFilter="ngModel" (keyup)="GetData()">
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of userList">
+            <td>
+                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteUser"
+                    (click)="SetUserToDelete(user.userId)">Borrar</button>
+                <a type="button" class="btn btn-warning btn-sm ms-1"
+                    routerLink="/administracion/usuarios/editar/{{user.userId}}" role="button">Editar</a>
+            </td>
+            <td scope="col">{{user.userId}}</td>
+            <td scope="col">{{user.name}}</td>
+            <td scope="col">{{user.surname}}</td>
+            <td scope="col">{{user.email}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="modal fade" id="deleteUser" tabindex="-1" aria-labelledby="deleteUserLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteUserLabel">Borrar</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Estas seguro que deseas borrar este usuario?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" (click)="Delete();" data-bs-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

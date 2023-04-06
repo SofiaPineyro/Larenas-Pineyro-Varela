@@ -1,0 +1,22 @@
+<div class="d-flex flex-row justify-content-between">
+    <div class="d-flex">
+        <h2>Vender tickets</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-header">
+                {{selectedTourName}}
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Cantidad de boletos</label>
+                    <input type="number" class="form-control" name="ammount" [(ngModel)]="amount">
+                </div>
+                <button class="btn btn-primary btn-small" (click)="Confirmar()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>

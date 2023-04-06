@@ -1,0 +1,60 @@
+<div class="d-flex flex-row justify-content-between">
+    <div class="d-flex">
+        <h2>Solistas</h2>
+        <a class="btn btn-primary btn-sm ms-3" role="button"
+            routerLink="/administracion/solistas/insertar"><span>Nuevo</span></a>
+    </div>
+    <div class="align-self-center">
+        <input type="email" class="form-control" placeholder="Filter" name="filter" [(ngModel)]="filter"
+            #modelFilter="ngModel" (keyup)="GetData()">
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Genero</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Artista</th>
+            <th scope="col">Rol</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let soloist of soloistList">
+            <td>
+                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#deleteSoloist"
+                    (click)="SetSoloistToDelete(soloist.musicalProtagonistId)">Borrar</button>
+                <a type="button" class="btn btn-warning btn-sm ms-1"
+                    routerLink="/administracion/solistas/editar/{{soloist.musicalProtagonistId}}"
+                    role="button">Editar</a>
+            </td>
+            <td scope="col">{{soloist.musicalProtagonistId}}</td>
+            <td scope="col">{{soloist.name}}</td>
+            <td scope="col">{{soloist.gender.name}}</td>
+            <td scope="col">{{soloist.startDate|date:'dd/MM/YYYY'}}</td>
+            <td scope="col">{{soloist.artist.name}}</td>
+            <td scope="col">{{soloist.roleArtist.name}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="modal fade" id="deleteSoloist" tabindex="-1" aria-labelledby="deleteSoloistLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteSoloistLabel">Borrar</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Estas seguro que deseas borrar este solista?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" (click)="Delete();" data-bs-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

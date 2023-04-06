@@ -1,0 +1,58 @@
+<div class="row justify-content-md-center">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">
+                {{mode}} concierto
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Tour</label>
+                    <input type="text" class="form-control" name="tourName" [(ngModel)]="model.tourName">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Fecha</label>
+                    <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker name="date" [(ngModel)]="model.date" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY' }">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Ticket</label>
+                    <input type="text" class="form-control" name="ticketCount" [(ngModel)]="model.ticketCount">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Precio</label>
+                    <input type="text" class="form-control" name="price" [(ngModel)]="model.price">
+                </div>
+                <div class=" mb-3 ">
+                    <label class="form-label ">Bandas</label>
+                    <ng-multiselect-dropdown [(ngModel)]="selectedBandList" [placeholder]=" 'Seleccionar' " [settings]="dropdownSettingsBand " [data]="bandList">
+                    </ng-multiselect-dropdown>
+                </div>
+                <div class=" mb-3 ">
+                    <label class="form-label ">Solistas</label>
+                    <ng-multiselect-dropdown [(ngModel)]="selectedSoloistList" [placeholder]=" 'Seleccionar' " [settings]="dropdownSettingsSoloist " [data]="soloistList">
+                    </ng-multiselect-dropdown>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Lugar</label>
+                    <input type="text" class="form-control" name="place" [(ngModel)]="model.location.place">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Calle</label>
+                    <input type="text" class="form-control" name="street" [(ngModel)]="model.location.street">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Numero</label>
+                    <input type="text" class="form-control" name="number" [(ngModel)]="model.location.number">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Pais</label>
+                    <select class="form-select" name="countryId" [(ngModel)]="model.location.countryId">
+                        <option *ngFor="let country of countryList" [value]="country.countryId">{{country.name}}
+                        </option>
+                    </select>
+                </div>
+                <button class="btn btn-primary btn-small" (click)="Confirmar()">Confirmar</button>
+                <a routerLink='/administracion/conciertos' class="btn btn-danger btn-small ms-1" role="button">Volver</a>
+            </div>
+        </div>
+    </div>
+</div>

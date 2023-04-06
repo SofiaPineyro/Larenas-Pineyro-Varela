@@ -1,0 +1,23 @@
+<div class="d-flex flex-row justify-content-between">
+    <div class="d-flex">
+        <h2>Mis tickets</h2>
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Concierto</th>
+            <th scope="col">Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let ticket of ticketList">
+            <td scope="col">{{ticket.ticketId}}</td>
+            <td scope="col">{{ticket.concert.tourName}}</td>
+            <td scope="col"><span class="badge"
+                    [ngClass]="{'text-bg-primary':ticket.ticketStatus.status=='Comprado', 'text-bg-success':ticket.ticketStatus.status=='Utilizado'}">{{ticket.ticketStatus.status}}</span>
+            </td>
+        </tr>
+    </tbody>
+</table>

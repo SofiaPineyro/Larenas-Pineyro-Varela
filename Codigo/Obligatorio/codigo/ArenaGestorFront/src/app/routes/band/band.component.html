@@ -1,0 +1,54 @@
+<div class="d-flex flex-row justify-content-between">
+    <div class="d-flex">
+        <h2>Bandas</h2>
+        <a class="btn btn-primary btn-sm ms-3" role="button"
+            routerLink="/administracion/bandas/insertar"><span>Nuevo</span></a>
+    </div>
+    <div class="align-self-center">
+        <input type="email" class="form-control" placeholder="Filter" name="filter" [(ngModel)]="filter"
+            #modelFilter="ngModel" (keyup)="GetData()">
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Genero</th>
+            <th scope="col">Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let band of bandList">
+            <td>
+                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteBand"
+                    (click)="SetBandToDelete(band.musicalProtagonistId)">Borrar</button>
+                <a type="button" class="btn btn-warning btn-sm ms-1"
+                    routerLink="/administracion/bandas/editar/{{band.musicalProtagonistId}}" role="button">Editar</a>
+            </td>
+            <td scope="col">{{band.musicalProtagonistId}}</td>
+            <td scope="col">{{band.name}}</td>
+            <td scope="col">{{band.gender.name}}</td>
+            <td scope="col">{{band.startDate|date:'dd/MM/YYYY'}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="modal fade" id="deleteBand" tabindex="-1" aria-labelledby="deleteBandLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteBandLabel">Borrar</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Estas seguro que deseas borrar esta banda?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" (click)="Delete();" data-bs-dismiss="modal">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

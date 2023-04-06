@@ -1,0 +1,29 @@
+<div class="d-flex flex-row justify-content-between">
+    <div class="d-flex">
+        <h2>Generos</h2>
+        <a class="btn btn-primary btn-sm ms-3" role="button" routerLink="/administracion/generos/insertar">Nuevo</a>
+    </div>
+    <div class="align-self-center">
+        <input type="text" class="form-control" placeholder="Filter" name="filter" [(ngModel)]="filter"
+            #modelFilter="ngModel" (keyup)="GetData()">
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let gender of genderList">
+            <td>
+                <a type="button" class="btn btn-warning btn-sm"
+                    routerLink="/administracion/generos/editar/{{gender.genderId}}" role="button">Editar</a>
+            </td>
+            <td scope="col">{{gender.genderId}}</td>
+            <td scope="col">{{gender.name}}</td>
+        </tr>
+    </tbody>
+</table>
