@@ -10,6 +10,7 @@ on:
 
 env:
   DOTNET_VERSION: '5.0'
+  working-directory: Codigo/Obligatorio/codigo/ArenaGestor
 
 jobs:
   build:
@@ -29,7 +30,8 @@ jobs:
 
     - name: Install dependencies
       run: dotnet restore
-      working-directory: Codigo/Obligatorio/codigo/ArenaGestor
+      working-directory: $${{ env.working-directory }}
       
     - name: Build
       run: dotnet build --configuration Release --no-restore
+      working-directory: $${{ env.working-directory }}
