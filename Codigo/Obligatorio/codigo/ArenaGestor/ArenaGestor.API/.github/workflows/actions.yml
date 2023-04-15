@@ -7,7 +7,6 @@ on:
     paths:
     - '**.cs'
     - '**.csproj'
-    - '**.sln'
 
 env:
   DOTNET_VERSION: '5.0'
