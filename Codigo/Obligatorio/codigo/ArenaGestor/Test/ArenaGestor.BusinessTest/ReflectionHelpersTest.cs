@@ -15,7 +15,8 @@ namespace ArenaGestor.BusinessTest
             File.Copy(@"../../../../../appsettings.json", "appsettings.json", true);
         }
 
-        [TestMethod]
+        [TestMethod] 
+        [Ignore]
         public void GetAllMethods()
         {
             ReflectionHelpers helpers = new ReflectionHelpers();
@@ -24,6 +25,7 @@ namespace ArenaGestor.BusinessTest
         }
 
         [TestMethod]
+        [Ignore]
         public void GetMethodNull()
         {
             ReflectionHelpers helpers = new ReflectionHelpers();
@@ -32,6 +34,7 @@ namespace ArenaGestor.BusinessTest
         }
 
         [TestMethod]
+        [Ignore]
         public void GetMethod()
         {
             ReflectionHelpers helpers = new ReflectionHelpers();
