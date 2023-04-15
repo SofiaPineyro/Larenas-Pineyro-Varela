@@ -35,3 +35,7 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
       working-directory: ${{ env.working-directory }}
+      
+    - name: Test with the dotnet CLI
+      run: dotnet test
+      working-directory: ${{ env.working-directory }}
