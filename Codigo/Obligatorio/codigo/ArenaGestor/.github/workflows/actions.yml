@@ -10,7 +10,7 @@ on:
     - '**.sln'
 
 env:
-  DOTNET_VERSION: '5.0.408'
+  DOTNET_VERSION: '5.0'
 
 jobs:
   build:
