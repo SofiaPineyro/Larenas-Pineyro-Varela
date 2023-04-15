@@ -10,7 +10,7 @@ on:
 
 env:
   DOTNET_VERSION: '5.0'
-  working-directory: Codigo/Obligatorio/codigo/ArenaGestor
+  working-directory: ./Codigo/Obligatorio/codigo/ArenaGestor
 
 jobs:
   build:
