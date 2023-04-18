@@ -32,7 +32,7 @@ namespace ArenaGestor.API.Controllers
         }
 
         [HttpPost("logout")]
-        [AuthorizationFilter(RoleCode.Administrador, RoleCode.Vendedor, RoleCode.Acomodador, RoleCode.Espectador)]
+        [AuthorizationFilter(RoleCode.Administrador, RoleCode.Vendedor, RoleCode.Acomodador, RoleCode.Espectador, RoleCode.Artista)]
         public IActionResult Logout([FromHeader] string token)
         {
             this.securityService.Logout(token);
