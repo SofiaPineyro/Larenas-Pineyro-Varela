@@ -25,7 +25,6 @@
 
         <div class="col-md-3 text-end" *ngIf="!isLogged">
             <button type="button" class="btn btn-outline-primary me-2" routerLink="login">Ingresar</button>
-            <button type="button" class="btn btn-primary">Registrarse</button>
         </div>
         <div class="col-md-3 text-end" *ngIf="isLogged">
             <app-user-info [User]="user"></app-user-info>
