@@ -6,24 +6,27 @@ import { UserResultUserDto } from 'src/app/models/Users/UserResultUserDto';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  templateUrl: './user.component.html'
+  templateUrl: './user.component.html',
 })
 export class UserComponent implements OnInit {
-
-  userList: Array<UserResultUserDto> = new Array()
-  filter: UserGetUsersDto = new UserGetUsersDto()
+  userList: Array<UserResultUserDto> = new Array();
+  filter: UserGetUsersDto = new UserGetUsersDto();
   userToDelete: Number = 0;
 
-  constructor(private toastr: ToastrService, private service: UserService, private router: Router) { }
+  constructor(
+    private toastr: ToastrService,
+    private service: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.GetData()
+    this.GetData();
   }
 
   GetData() {
-    this.service.Get(this.filter).subscribe(res => {
-      this.userList = res
-    })
+    this.service.Get(this.filter).subscribe((res) => {
+      this.userList = res;
+    });
   }
 
   SetUserToDelete(id: Number) {
@@ -31,13 +34,14 @@ export class UserComponent implements OnInit {
   }
 
   Delete() {
-    this.service.Delete(this.userToDelete).subscribe(res => {
-      this.toastr.success("Usuario eliminado correctamente", "Éxito")
-      this.GetData();
-    },
-      err => {
-        this.toastr.error(err.error, "Error")
-      })
+    this.service.Delete(this.userToDelete).subscribe(
+      (res) => {
+        this.toastr.success('Usuario eliminado correctamente', 'Éxito');
+        this.GetData();
+      },
+      (err) => {
+        this.toastr.error(err.error, 'Error');
+      }
+    );
   }
-
 }

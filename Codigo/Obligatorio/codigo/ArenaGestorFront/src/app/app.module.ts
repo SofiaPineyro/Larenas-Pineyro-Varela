@@ -50,6 +50,8 @@ import { ProtagonistBandsComponent } from './routes/protagonist/protagonist.band
 import { ProtagonistSoloistsComponent } from './routes/protagonist/protagonist.soloists.component';
 import { ProtagonistBandComponent } from './routes/protagonist/protagonist.band.component';
 import { ProtagonistSoloistComponent } from './routes/protagonist/protagonist.soloist.component';
+import { SnacksComponent } from './routes/snacks/snacks.component';
+import { SnacksInsertComponent } from './routes/snacks/snacks-insert.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +91,9 @@ import { ProtagonistSoloistComponent } from './routes/protagonist/protagonist.so
     ProtagonistBandsComponent,
     ProtagonistSoloistsComponent,
     ProtagonistBandComponent,
-    ProtagonistSoloistComponent
+    ProtagonistSoloistComponent,
+    SnacksComponent,
+    SnacksInsertComponent,
   ],
   imports: [
     CommonModule,
@@ -108,8 +112,8 @@ import { ProtagonistSoloistComponent } from './routes/protagonist/protagonist.so
     { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
     SecurityService,
     Events,
-    CookieService
+    CookieService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
