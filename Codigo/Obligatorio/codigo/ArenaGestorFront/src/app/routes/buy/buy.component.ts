@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { SnackResultDto } from 'src/app/models/Snacks/SnackResultDto';
 import { TicketBuyTicketDto } from 'src/app/models/Tickets/TicketBuyTicketDto';
 import { ConcertService } from 'src/app/services/concert.service';
+import { SnacksService } from 'src/app/services/snacks.service';
 import { TicketsService } from 'src/app/services/tickets.service';
 
 @Component({
@@ -24,6 +25,7 @@ export class BuyComponent implements OnInit {
   constructor(
     private toastr: ToastrService,
     private ticketService: TicketsService,
+    private snacksService: SnacksService,
     private service: ConcertService,
     private router: Router,
     private activatedRoute: ActivatedRoute
@@ -67,7 +69,24 @@ export class BuyComponent implements OnInit {
     dto.concertId = this.selectedId;
     this.ticketService.Shopping(dto).subscribe(
       (res) => {
-        this.toastr.success('Ticket comprado con ID: ' + res.ticketId);
+        const payload: Array<{ id: Number; quantity: Number }> = [];
+        this.snacksMap.forEach((value, key) => {
+          payload.push({
+            id: parseInt(key.split('-')[0]),
+            quantity: value.quantity,
+          });
+        });
+        this.snacksService.Buy(payload).subscribe(
+          (res2) => {
+            this.toastr.success('Ticket comprado con ID: ' + res.ticketId);
+          },
+          (error) => {
+            this.toastr.error(
+              'Se han comprado los tickets, pero la compra de snacks ha fallado con error' +
+                error.error
+            );
+          }
+        );
       },
       (error) => {
         this.toastr.error(error.error);

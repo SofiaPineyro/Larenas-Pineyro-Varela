@@ -16,8 +16,14 @@ export class SnacksService {
   }
 
   Get(): Observable<Array<SnackResultDto>> {
-    let url = this.apiUrl;
-    return this.http.get<Array<SnackResultDto>>(url);
+    return this.http.get<Array<SnackResultDto>>(this.apiUrl);
+  }
+
+  Buy(
+    snacks: Array<{ id: Number; quantity: Number }>
+  ): Observable<Array<SnackResultDto>> {
+    const payload = JSON.stringify(snacks);
+    return this.http.post<Array<SnackResultDto>>(this.apiUrl, payload);
   }
 
   Insert(snack: SnackInsertDto): Observable<SnackResultDto> {

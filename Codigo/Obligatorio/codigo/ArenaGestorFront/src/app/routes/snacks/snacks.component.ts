@@ -9,10 +9,7 @@ import { SnacksService } from 'src/app/services/snacks.service';
   styleUrls: ['./snacks.component.scss'],
 })
 export class SnacksComponent implements OnInit {
-  // BORRAR - snack hardcodeado
-  snackList: Array<SnackResultDto> = [
-    { snackId: 1, name: 'doritos', description: 'rikisimos', price: 200 },
-  ];
+  snackList: Array<SnackResultDto> = [];
   snackToDelete: Number = 0;
   role: String = localStorage.getItem('role') || 'Espectador';
 
