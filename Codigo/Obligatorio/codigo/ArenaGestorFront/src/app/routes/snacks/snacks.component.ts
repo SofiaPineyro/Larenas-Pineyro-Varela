@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { SnackResultDto } from 'src/app/models/Snacks/SnackResultDto';
 import { SnacksService } from 'src/app/services/snacks.service';
@@ -9,13 +9,23 @@ import { SnacksService } from 'src/app/services/snacks.service';
   styleUrls: ['./snacks.component.scss'],
 })
 export class SnacksComponent implements OnInit {
-  snackList: Array<SnackResultDto> = new Array();
+  // BORRAR - snack hardcodeado
+  snackList: Array<SnackResultDto> = [
+    { snackId: 1, name: 'doritos', description: 'rikisimos', price: 200 },
+  ];
   snackToDelete: Number = 0;
+  role: String = localStorage.getItem('role') || 'Espectador';
+
+  @Output() snackAdded = new EventEmitter<SnackResultDto>();
 
   constructor(private toastr: ToastrService, private service: SnacksService) {}
 
   ngOnInit(): void {
     this.GetData();
+  }
+
+  AddSnack(snack: SnackResultDto) {
+    this.snackAdded.emit(snack);
   }
 
   GetData() {

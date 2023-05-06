@@ -5,7 +5,7 @@ import { SnackInsertDto } from 'src/app/models/Snacks/SnackInsertDto';
 import { SnacksService } from 'src/app/services/snacks.service';
 
 @Component({
-  selector: 'app-snacks',
+  selector: 'app-snacks-insert',
   templateUrl: './snacks-form.component.html',
   styleUrls: ['./snacks.component.scss'],
 })

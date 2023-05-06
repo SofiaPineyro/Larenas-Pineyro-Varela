@@ -5,7 +5,15 @@
 </div>
 
 <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-8">
+        <div class="card">
+            <div class="card-header">Comprar Snacks</div>
+            <div class="card-body">
+                <app-snacks (snackAdded)="onSnackAdded($event)"></app-snacks>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
         <div class="card">
             <div class="card-header">
                 {{selectedTourName}}
@@ -15,7 +23,30 @@
                     <label class="form-label">Cantidad de boletos</label>
                     <input type="number" class="form-control" name="ammount" [(ngModel)]="amount">
                 </div>
-                <button class="btn btn-primary btn-small" (click)="Confirmar()">Confirmar</button>
+                <button class="btn btn-primary btn-small" (click)="Confirmar()">Agregar</button>
+                <div class="my-3">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Snack</th>
+                                <th scope="col">Cantidad</th>
+                                <th scope="col">Precio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let snack of snackList">
+                                <td scope="col">{{snack.key.split('-')[1]}}</td>
+                                <td scope="col">{{snack.value.quantity}}</td>
+                                <td scope="col">{{snack.value.price}}</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <td colspan="2">Total:</td>
+                            <td>{{ totalPrice }}</td>
+                        </tfoot>
+                    </table>
+                </div>
+                <button class="btn btn-success btn-small" (click)="Confirmar()">Confirmar</button>
             </div>
         </div>
     </div>
