@@ -1,0 +1,48 @@
+<div class="d-flex flex-row justify-content-between">
+  <div class="d-flex">
+    <h2>Snacks</h2>
+    <a class="btn btn-primary btn-sm ms-3" role="button"
+      routerLink="/administracion/snacks/insertar"><span>Nuevo</span></a>
+  </div>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th scope="col">Id</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Descripción</th>
+      <th scope="col">Precio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let snack of snackList">
+      <td>
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteSnack"
+          (click)="SetSnackToDelete(snack.snackId)">Borrar</button>
+      </td>
+      <td scope="col">{{snack.snackId}}</td>
+      <td scope="col">{{snack.name}}</td>
+      <td scope="col">{{snack.description}}</td>
+      <td scope="col">{{snack.price}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="modal fade" id="deleteSnack" tabindex="-1" aria-labelledby="deleteSnackLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteSnackLabel">Borrar</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Estas seguro que deseas borrar este delicioso snack?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" (click)="Delete();" data-bs-dismiss="modal">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

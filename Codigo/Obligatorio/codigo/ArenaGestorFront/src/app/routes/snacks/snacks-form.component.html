@@ -1,0 +1,25 @@
+<div class="row justify-content-md-center">
+  <div class="col-sm-8">
+    <div class="card">
+      <div class="card-header">
+        Insertar snack
+      </div>
+      <div class="card-body">
+        <div class="mb-3">
+          <label class="form-label">Nombre</label>
+          <input type="text" class="form-control" name="name" [(ngModel)]="model.name">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Descripción</label>
+          <input type="text" class="form-control" name="description" [(ngModel)]="model.description">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Precio</label>
+          <input type="number" class="form-control" name="price" [(ngModel)]="price">
+        </div>
+        <button class="btn btn-primary btn-small " (click)="Confirmar() ">Confirmar</button>
+        <a routerLink='/administracion/snacks' class="btn btn-danger btn-small ms-1 " role="button ">Volver</a>
+      </div>
+    </div>
+  </div>
+</div>
