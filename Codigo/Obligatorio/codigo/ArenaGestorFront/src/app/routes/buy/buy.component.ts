@@ -15,6 +15,7 @@ export class BuyComponent implements OnInit {
   selectedTourName: String = '';
   selectedId: Number = 0;
   amount: Number = 0;
+  concertPrice: Number = 0;
   snackList: Array<{
     key: String;
     value: { price: Number; quantity: Number };
@@ -36,8 +37,13 @@ export class BuyComponent implements OnInit {
       this.service.GetById(params['id']).subscribe((concert) => {
         this.selectedTourName = concert.tourName;
         this.selectedId = concert.concertId;
+        this.concertPrice = concert.price;
       });
     });
+  }
+
+  onChange(event: any){
+      this.totalPrice = event.target.value * this.concertPrice.valueOf();
   }
 
   onSnackAdded(snack: SnackResultDto) {

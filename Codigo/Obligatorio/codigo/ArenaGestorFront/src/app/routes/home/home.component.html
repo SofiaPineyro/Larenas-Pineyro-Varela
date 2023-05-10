@@ -28,7 +28,7 @@
         <tr *ngFor="let concert of concertsList">
             <td>
                 <a type="button" class="btn btn-warning btn-sm ms-1" routerLink="/administracion/conciertos/ver/{{concert.concertId}}" role="button">Ver</a>
-                <a type="button" class="btn btn-success btn-sm ms-1" routerLink="/tickets/comprar/{{concert.concertId}}" role="button">Comprar tickets</a>
+                <a type="button" class="btn btn-success btn-sm ms-1" routerLink="/tickets/comprar/{{concert.concertId}}" role="button" *ngIf="role==='Espectador'">Comprar tickets</a>
             </td>
             <td scope="col">{{concert.concertId}}</td>
             <td scope="col">{{concert.tourName}}</td>

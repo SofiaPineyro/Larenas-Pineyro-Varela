@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
   concertsList: Array<ConcertResultConcertDto> = new Array<ConcertResultConcertDto>()
   filter: ConcertGetConcertsDto = new ConcertGetConcertsDto()
   concertToView: Number = 0;
+  role: String = localStorage.getItem('role') || '';
 
   constructor(private toastr: ToastrService, private service: ConcertService, private router: Router) { }
 
@@ -20,7 +21,8 @@ export class HomeComponent implements OnInit {
     this.filter.upcoming = true;
     this.filter.dateRange.startDate = new Date(this.filter.dateRange.endDate.setFullYear(2021));
     this.filter.dateRange.endDate = new Date(this.filter.dateRange.endDate.setFullYear(2023));
-    this.GetUpcoming()
+    this.GetUpcoming();
+    this.role = localStorage.getItem('role') || '';
   }
 
   GetData() {
