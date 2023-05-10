@@ -1,3 +1,3 @@
-﻿global using FluentAssertions;
-global using TechTalk.SpecFlow;
-global using Xunit;
+﻿using FluentAssertions;
+using TechTalk.SpecFlow;
+using Xunit;
