@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ArenaGestor.Business
 {
-    internal class SnackService
+    public class SnackService
     {
     }
 }
