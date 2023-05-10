@@ -1,8 +1,10 @@
-<div class="d-flex flex-row justify-content-between">
-  <div class="d-flex">
-    <h2>Snacks</h2>
-    <a class="btn btn-primary btn-sm ms-3" role="button"
-      routerLink="/administracion/snacks/insertar"><span>Nuevo</span></a>
+<div *ngIf="role === 'Administrador'">
+  <div class="d-flex flex-row justify-content-between">
+    <div class="d-flex">
+      <h2>Snacks</h2>
+      <a class="btn btn-primary btn-sm ms-3" role="button"
+        routerLink="/administracion/snacks/insertar"><span>Nuevo</span></a>
+    </div>
   </div>
 </div>
 <table class="table table-striped">
@@ -18,8 +20,13 @@
   <tbody>
     <tr *ngFor="let snack of snackList">
       <td>
-        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteSnack"
-          (click)="SetSnackToDelete(snack.snackId)">Borrar</button>
+        <div *ngIf="role === 'Administrador'">
+          <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteSnack"
+            (click)="SetSnackToDelete(snack.snackId)">Borrar</button>
+        </div>
+        <div *ngIf="role === 'Espectador'">
+          <button type="button" class="btn btn-primary btn-sm" (click)="AddSnack(snack)">Agregar</button>
+        </div>
       </td>
       <td scope="col">{{snack.snackId}}</td>
       <td scope="col">{{snack.name}}</td>
@@ -29,19 +36,21 @@
   </tbody>
 </table>
 
-<div class="modal fade" id="deleteSnack" tabindex="-1" aria-labelledby="deleteSnackLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteSnackLabel">Borrar</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Estas seguro que deseas borrar este delicioso snack?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger" (click)="Delete();" data-bs-dismiss="modal">Delete</button>
+<div *ngIf="role === 'Administrador'">
+  <div class="modal fade" id="deleteSnack" tabindex="-1" aria-labelledby="deleteSnackLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteSnackLabel">Borrar</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Estas seguro que deseas borrar este delicioso snack?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" (click)="Delete();" data-bs-dismiss="modal">Delete</button>
+        </div>
       </div>
     </div>
   </div>
