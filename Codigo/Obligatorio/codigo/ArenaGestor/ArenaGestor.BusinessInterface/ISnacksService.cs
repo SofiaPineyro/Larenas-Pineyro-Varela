@@ -12,5 +12,6 @@ namespace ArenaGestor.BusinessInterface
         IEnumerable<Snack> GetSnacks();
         Snack InsertSnack(Snack snack);
         void DeleteSnack(int snackId);
+        Snack BuySnack(Snack snackBuy);
     }
 }

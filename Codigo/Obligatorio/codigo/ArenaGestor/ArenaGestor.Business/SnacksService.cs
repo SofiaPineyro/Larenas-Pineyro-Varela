@@ -44,7 +44,7 @@ namespace ArenaGestor.Business
             CommonValidations.ValidId(snackId);
 
             var snackToDelete = snackManagement.GetSnacks(x => x.Id == snackId);
-            if (snackToDelete!=null && !snackToDelete.Any())
+            if (snackToDelete != null && !snackToDelete.Any())
             {
                 throw new NullReferenceException($"The snack with identifier: {snackId} doesn't exists.");
             }
@@ -60,6 +60,23 @@ namespace ArenaGestor.Business
             }
         }
 
+        public Snack BuySnack(Snack snackBuy)
+        {
+            if (snackBuy == null)
+            {
+                throw new ArgumentException("Invalid data in purchase");
+            }
 
+            Snack snack = snackManagement.GetSnacks(x => x.Id == snackBuy.Id).FirstOrDefault();
+
+            if (snack == null)
+            {
+                throw new NullReferenceException("This snack does not exist");
+            }
+            else
+            {
+                return snack;
+            }
+        }
     }
 }
