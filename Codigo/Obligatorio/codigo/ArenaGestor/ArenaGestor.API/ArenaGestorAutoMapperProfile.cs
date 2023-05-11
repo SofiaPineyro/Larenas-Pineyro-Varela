@@ -147,6 +147,8 @@ namespace ArenaGestor.API
 
             CreateMap<Snack, SnackResultSnackDto>();
             CreateMap<InsertSnackDto, Snack>();
+
+            CreateMap<BuySnackDto, Snack>();
         }
     }
 }
