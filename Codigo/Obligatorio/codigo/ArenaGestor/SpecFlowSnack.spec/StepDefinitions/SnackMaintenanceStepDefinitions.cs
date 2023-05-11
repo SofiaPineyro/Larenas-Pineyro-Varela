@@ -1,7 +1,10 @@
+using ArenaGestor.API;
 using ArenaGestor.API.Controllers;
 using ArenaGestor.APIContracts.Snack;
+using ArenaGestor.Business;
 using ArenaGestor.BusinessInterface;
 using ArenaGestor.DataAccess;
+using ArenaGestor.DataAccess.Managements;
 using ArenaGestor.Domain;
 using AutoMapper;
 using FluentAssertions;
@@ -18,27 +21,42 @@ namespace SpecFlowSnack.spec.StepDefinitions
         private readonly Snack _snackOnDTB;
         private readonly Snack _snackNotOnDB;
 
-        private Mock<ISnacksService> mock;
-        private Mock<IMapper> mockMapper;
+        private SnacksService snacksService;
         private SnacksController snackController;
 
         private DbContext context;
         private SnacksManagement management;
 
+        private Exception exception;
+
         private int? _responseCode;
 
         public SnackMaintenanceStepDefinitions()
         {
-            mock = new Mock<ISnacksService>(MockBehavior.Strict);
-            mockMapper = new Mock<IMapper>(MockBehavior.Strict);
+            var dbName = Guid.NewGuid().ToString();
+
+            var options = new DbContextOptionsBuilder<ArenaGestorContext>()
+                .UseInMemoryDatabase(databaseName: dbName)
+                .Options;
+
+            context = new ArenaGestorContext(options);
+
+            management = new SnacksManagement(context);
+
+            snacksService = new SnacksService(management);
 
             user = new User();
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new ArenaGestorAutoMapperProfile());
+            });
 
-            snackController = new SnacksController(mock.Object, mockMapper.Object);
+            IMapper mapper = mapperConfig.CreateMapper();
+            snackController = new SnacksController(snacksService, mapper);
 
             _snackOnDTB = new Snack()
             {
-                Name = "chips",
+                Name = "Hot dog",
                 Description = "estas son papas muy caras",
                 Price = 500
             };
@@ -49,15 +67,7 @@ namespace SpecFlowSnack.spec.StepDefinitions
                 Price = 500
             };
 
-            var dbName = Guid.NewGuid().ToString();
-
-            var options = new DbContextOptionsBuilder<ArenaGestorContext>()
-                .UseInMemoryDatabase(databaseName: dbName)
-                .Options;
-
-            context = new ArenaGestorContext(options);
             
-            management = new SnacksManagement(context);
         }
 
         [Given(@"I am an administrator")]
@@ -103,13 +113,15 @@ namespace SpecFlowSnack.spec.StepDefinitions
                 Price = p2
             };
 
-            mock.Setup(x => x.InsertSnack(snack)).Returns(snack);
-            mockMapper.Setup(x => x.Map<Snack>(insertSnackDto)).Returns(snack);
-            mockMapper.Setup(x => x.Map<SnackResultSnackDto>(snack)).Returns(resultSnackDto);
-
-            var result = snackController.PostSnack(insertSnackDto);
-            var objectResult = result as ObjectResult;
-            _responseCode = objectResult.StatusCode;
+            try
+            {
+                var result = snackController.PostSnack(insertSnackDto);
+                var objectResult = result as OkObjectResult;
+                _responseCode = objectResult.StatusCode;
+            }catch(Exception ex)
+            {
+                exception = ex;
+            }
         }
 
         [Then(@"the response status code should be (.*)")]
@@ -121,14 +133,15 @@ namespace SpecFlowSnack.spec.StepDefinitions
         [Then(@"the snack with name ""([^""]*)"" should be added to the snacks table")]
         public void ThenTheSnackWithNameShouldBeAddedToTheSnacksTable(string chips)
         {
-            var exists = management.Exists(x => x.Name == chips);
+            var exists = management.ExistsSnack(x => x.Name == chips);
             exists.Should().BeTrue();
         }
 
         [Given(@"there is already a snack with name ""([^""]*)"" in the snacks table")]
         public void GivenThereIsAlreadyASnackWithNameInTheSnacksTable(string chips)
         {
-            var exists = management.Exists(x => x.Name == chips);
+            _snackOnDTB.Name = chips;
+            var exists = management.ExistsSnack(x => x.Name == chips);
             if (!exists)
             {
                 context.Set<Snack>().Add(_snackOnDTB);
@@ -139,7 +152,7 @@ namespace SpecFlowSnack.spec.StepDefinitions
         [Given(@"there is a snack with ID (.*) in the snacks table")]
         public void GivenThereIsASnackWithIDInTheSnacksTable(int p0)
         {
-            var exists = management.Exists(x => x.Id == p0);
+            var exists = management.ExistsSnack(x => x.Id == p0);
             if(!exists)
             {
                 context.Set<Snack>().Add(_snackOnDTB);
@@ -150,17 +163,21 @@ namespace SpecFlowSnack.spec.StepDefinitions
         [When(@"I delete the snack with ID (.*)")]
         public void WhenIDeleteTheSnackWithID(int p0)
         {
-            mock.Setup(x => x.DeleteSnack(p0));
-
-            var result = snackController.DeleteSnack(p0);
-            var objectResult = result as ObjectResult;
-            _responseCode = objectResult.StatusCode;
+            try
+            {
+                var result = snackController.DeleteSnack(p0);
+                var objectResult = result as OkResult;
+                _responseCode = objectResult.StatusCode;
+            }catch (Exception ex)
+            {
+                exception = ex;
+            }
         }
 
         [Then(@"the snack with ID (.*) should no longer appear in the snacks table")]
         public void ThenTheSnackWithIDShouldNoLongerAppearInTheSnacksTable(int p0)
         {
-            var exists = management.Exists(x => x.Id == p0);
+            var exists = management.ExistsSnack(x => x.Id == p0);
             exists.Should().BeFalse();
         }
 
@@ -168,12 +185,26 @@ namespace SpecFlowSnack.spec.StepDefinitions
         public void GivenThereIsNoSnackWithIDInTheSnacksTable(int p0)
         {
             _snackNotOnDB.Id = p0;
-            var exists = management.Exists(x => x.Id == p0);
+            var exists = management.ExistsSnack(x => x.Id == p0);
             if (exists)
             {
                 context.Set<Snack>().Remove(_snackNotOnDB);
                 context.SaveChanges();
             }
         }
+
+        [Then(@"ArgumentException is thrown")]
+        public void ThenArgumentExceptionIsThrown()
+        {
+            exception.Should().BeOfType<ArgumentException>();
+        }
+
+        [Then(@"NullReferenceException is thrown")]
+        public void ThenNullReferenceExceptionIsThrown()
+        {
+            exception.Should().BeOfType<NullReferenceException>();
+        }
+
+
     }
 }

@@ -12,13 +12,13 @@ Scenario:  Successful snack creation
 Scenario: Snack creation with missing data
 	Given I am an administrator
 	When I add a new snack with name "", description "Potato chips", and price 0
-	Then the response status code should be 400
+	Then ArgumentException is thrown
 
 Scenario: Duplicate snack creation
 	Given I am an administrator
-	And there is already a snack with name "Chips" in the snacks table
-	When I add a new snack with name "Chips", description "Tortilla chips", and price 189
-	Then the response status code should be 400
+	And there is already a snack with name "Hot dogs" in the snacks table
+	When I add a new snack with name "Hot dogs", description "Hot dogs", and price 189
+	Then ArgumentException is thrown
 
 Scenario: Successful snack deletion
 	Given I am an administrator
@@ -31,4 +31,4 @@ Scenario: Non-existent snack deletion
 	Given I am an administrator
 	And there is no snack with ID 9 in the snacks table
 	When I delete the snack with ID 9
-	Then the response status code should be 404
+	Then NullReferenceException is thrown

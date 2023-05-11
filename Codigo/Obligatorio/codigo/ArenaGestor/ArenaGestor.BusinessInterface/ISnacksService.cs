@@ -9,7 +9,7 @@ namespace ArenaGestor.BusinessInterface
 {
     public interface ISnacksService
     {
-        IEnumerable<Snack> GetSnacks(Snack snack = null);
+        IEnumerable<Snack> GetSnacks();
         Snack InsertSnack(Snack snack);
         void DeleteSnack(int snackId);
     }

@@ -5,35 +5,29 @@ using ArenaGestor.Domain;
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using ArenaGestor.DataAccessInterface;
 
 namespace ArenaGestor.Business
 {
-    public class SnacksService
+    public class SnacksService : ISnacksService
     {
         private readonly ISnacksManagement snackManagement;
-        private readonly IUsersService usersService;
 
-        public SnacksService(ISnacksManagement snacksManagement, IUsersService usersService)
+        public SnacksService(ISnacksManagement snacksManagement)
         {
             this.snackManagement = snacksManagement;
-            this.usersService = usersService;
         }
 
         public IEnumerable<Snack> GetSnacks()
         {
-            return snackManagement.GetSnacks();
+            return snackManagement.GetSnacks(x => x.Id == x.Id);
         }
 
         public Snack InsertSnack(Snack snack)
         {
             ValidSnack(snack);
 
-            Snack snackCheckName = new Snack()
-            {
-                Name = snack.Name
-            };
-
-            var snacks = snackManagement.Exists(x => x.Name == snackCheckName);
+            var snacks = snackManagement.ExistsSnack(x => x.Name == snack.Name);
             if (snacks)
             {
                 throw new ArgumentException($"It already exists an snack with name: {snack.Name}");
@@ -49,12 +43,12 @@ namespace ArenaGestor.Business
         {
             CommonValidations.ValidId(snackId);
 
-            var snackToDelete = snackManagement.Exists(x => x.Id == snackId);
-            if (!snackToDelete)
+            var snackToDelete = snackManagement.GetSnacks(x => x.Id == snackId);
+            if (snackToDelete!=null && !snackToDelete.Any())
             {
                 throw new NullReferenceException($"The snack with identifier: {snackId} doesn't exists.");
             }
-            snackManagement.DeleteSnack(snackToDelete);
+            snackManagement.DeleteSnack(snackToDelete.First());
             snackManagement.Save();
         }
 
