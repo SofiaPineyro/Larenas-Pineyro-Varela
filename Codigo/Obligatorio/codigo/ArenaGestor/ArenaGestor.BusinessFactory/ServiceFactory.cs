@@ -30,6 +30,7 @@ namespace ArenaGestor.BusinessFactory
             services.AddScoped<IRolesService, RolesService>();
             services.AddScoped<IImportExportService, ImportExportService>();
             services.AddSingleton<IReflectionHelpers, ReflectionHelpers>();
+            services.AddScoped<ISnacksService, SnacksService>();
         }
     }
 }

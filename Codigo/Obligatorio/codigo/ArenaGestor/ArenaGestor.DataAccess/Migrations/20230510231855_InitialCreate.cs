@@ -3,21 +3,21 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ArenaGestor.DataAccess.Migrations
 {
-    public partial class initial : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Artist",
+                name: "Countrys",
                 columns: table => new
                 {
-                    ArtistId = table.Column<int>(type: "int", nullable: false)
+                    CountryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Artist", x => x.ArtistId);
+                    table.PrimaryKey("PK_Countrys", x => x.CountryId);
                 });
 
             migrationBuilder.CreateTable(
@@ -43,6 +43,33 @@ namespace ArenaGestor.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Role", x => x.RoleId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RoleArtist",
+                columns: table => new
+                {
+                    RoleArtistId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoleArtist", x => x.RoleArtistId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Snack",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Snack", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,6 +101,28 @@ namespace ArenaGestor.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Location",
+                columns: table => new
+                {
+                    LocationId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Place = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CountryId = table.Column<int>(type: "int", nullable: false),
+                    Street = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Number = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Location", x => x.LocationId);
+                    table.ForeignKey(
+                        name: "FK_Location_Countrys_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Countrys",
+                        principalColumn: "CountryId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MusicalProtagonist",
                 columns: table => new
                 {
@@ -95,24 +144,44 @@ namespace ArenaGestor.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RoleUser",
+                name: "Artist",
                 columns: table => new
                 {
-                    RolesRoleId = table.Column<int>(type: "int", nullable: false),
-                    UsersUserId = table.Column<int>(type: "int", nullable: false)
+                    ArtistId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RoleUser", x => new { x.RolesRoleId, x.UsersUserId });
+                    table.PrimaryKey("PK_Artist", x => x.ArtistId);
                     table.ForeignKey(
-                        name: "FK_RoleUser_Role_RolesRoleId",
-                        column: x => x.RolesRoleId,
+                        name: "FK_Artist_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RoleUser",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoleUser", x => new { x.RoleId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_RoleUser_Role_RoleId",
+                        column: x => x.RoleId,
                         principalTable: "Role",
                         principalColumn: "RoleId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RoleUser_User_UsersUserId",
-                        column: x => x.UsersUserId,
+                        name: "FK_RoleUser_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
@@ -140,6 +209,29 @@ namespace ArenaGestor.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Concert",
+                columns: table => new
+                {
+                    ConcertId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TourName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TicketCount = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    LocationId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Concert", x => x.ConcertId);
+                    table.ForeignKey(
+                        name: "FK_Concert_Location_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Location",
+                        principalColumn: "LocationId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Band",
                 columns: table => new
                 {
@@ -157,34 +249,12 @@ namespace ArenaGestor.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Concert",
-                columns: table => new
-                {
-                    ConcertId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TourName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TicketCount = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false),
-                    MusicalProtagonistId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Concert", x => x.ConcertId);
-                    table.ForeignKey(
-                        name: "FK_Concert_MusicalProtagonist_MusicalProtagonistId",
-                        column: x => x.MusicalProtagonistId,
-                        principalTable: "MusicalProtagonist",
-                        principalColumn: "MusicalProtagonistId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Soloist",
                 columns: table => new
                 {
                     MusicalProtagonistId = table.Column<int>(type: "int", nullable: false),
-                    ArtistId = table.Column<int>(type: "int", nullable: false)
+                    ArtistId = table.Column<int>(type: "int", nullable: false),
+                    RoleArtistId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -201,28 +271,34 @@ namespace ArenaGestor.DataAccess.Migrations
                         principalTable: "MusicalProtagonist",
                         principalColumn: "MusicalProtagonistId",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Soloist_RoleArtist_RoleArtistId",
+                        column: x => x.RoleArtistId,
+                        principalTable: "RoleArtist",
+                        principalColumn: "RoleArtistId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ArtistBand",
+                name: "ConcertProtagonist",
                 columns: table => new
                 {
-                    ArtistsArtistId = table.Column<int>(type: "int", nullable: false),
-                    BandsMusicalProtagonistId = table.Column<int>(type: "int", nullable: false)
+                    ConcertId = table.Column<int>(type: "int", nullable: false),
+                    MusicalProtagonistId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ArtistBand", x => new { x.ArtistsArtistId, x.BandsMusicalProtagonistId });
+                    table.PrimaryKey("PK_ConcertProtagonist", x => new { x.ConcertId, x.MusicalProtagonistId });
                     table.ForeignKey(
-                        name: "FK_ArtistBand_Artist_ArtistsArtistId",
-                        column: x => x.ArtistsArtistId,
-                        principalTable: "Artist",
-                        principalColumn: "ArtistId",
+                        name: "FK_ConcertProtagonist_Concert_ConcertId",
+                        column: x => x.ConcertId,
+                        principalTable: "Concert",
+                        principalColumn: "ConcertId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ArtistBand_Band_BandsMusicalProtagonistId",
-                        column: x => x.BandsMusicalProtagonistId,
-                        principalTable: "Band",
+                        name: "FK_ConcertProtagonist_MusicalProtagonist_MusicalProtagonistId",
+                        column: x => x.MusicalProtagonistId,
+                        principalTable: "MusicalProtagonist",
                         principalColumn: "MusicalProtagonistId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -254,6 +330,46 @@ namespace ArenaGestor.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "ArtistBand",
+                columns: table => new
+                {
+                    ArtistId = table.Column<int>(type: "int", nullable: false),
+                    MusicalProtagonistId = table.Column<int>(type: "int", nullable: false),
+                    RoleArtistId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArtistBand", x => new { x.ArtistId, x.MusicalProtagonistId });
+                    table.ForeignKey(
+                        name: "FK_ArtistBand_Artist_ArtistId",
+                        column: x => x.ArtistId,
+                        principalTable: "Artist",
+                        principalColumn: "ArtistId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ArtistBand_Band_MusicalProtagonistId",
+                        column: x => x.MusicalProtagonistId,
+                        principalTable: "Band",
+                        principalColumn: "MusicalProtagonistId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ArtistBand_RoleArtist_RoleArtistId",
+                        column: x => x.RoleArtistId,
+                        principalTable: "RoleArtist",
+                        principalColumn: "RoleArtistId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Countrys",
+                columns: new[] { "CountryId", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Uruguay" },
+                    { 2, "Argentina" }
+                });
+
             migrationBuilder.InsertData(
                 table: "Role",
                 columns: new[] { "RoleId", "Name" },
@@ -262,7 +378,20 @@ namespace ArenaGestor.DataAccess.Migrations
                     { 1, "Administrador" },
                     { 2, "Vendedor" },
                     { 3, "Acomodador" },
-                    { 4, "Espectador" }
+                    { 4, "Espectador" },
+                    { 5, "Artista" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "RoleArtist",
+                columns: new[] { "RoleArtistId", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Cantante" },
+                    { 2, "Baterista" },
+                    { 3, "Bajista" },
+                    { 4, "Guitarrista" },
+                    { 5, "Coro" }
                 });
 
             migrationBuilder.InsertData(
@@ -281,13 +410,28 @@ namespace ArenaGestor.DataAccess.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ArtistBand_BandsMusicalProtagonistId",
-                table: "ArtistBand",
-                column: "BandsMusicalProtagonistId");
+                name: "IX_Artist_UserId",
+                table: "Artist",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Concert_MusicalProtagonistId",
+                name: "IX_ArtistBand_MusicalProtagonistId",
+                table: "ArtistBand",
+                column: "MusicalProtagonistId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArtistBand_RoleArtistId",
+                table: "ArtistBand",
+                column: "RoleArtistId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Concert_LocationId",
                 table: "Concert",
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConcertProtagonist_MusicalProtagonistId",
+                table: "ConcertProtagonist",
                 column: "MusicalProtagonistId");
 
             migrationBuilder.CreateIndex(
@@ -295,6 +439,11 @@ namespace ArenaGestor.DataAccess.Migrations
                 table: "Gender",
                 column: "Name",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Location_CountryId",
+                table: "Location",
+                column: "CountryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MusicalProtagonist_GenderId",
@@ -314,9 +463,9 @@ namespace ArenaGestor.DataAccess.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_RoleUser_UsersUserId",
+                name: "IX_RoleUser_UserId",
                 table: "RoleUser",
-                column: "UsersUserId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Session_UserId",
@@ -324,9 +473,21 @@ namespace ArenaGestor.DataAccess.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Snack_Name",
+                table: "Snack",
+                column: "Name",
+                unique: true,
+                filter: "[Name] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Soloist_ArtistId",
                 table: "Soloist",
                 column: "ArtistId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Soloist_RoleArtistId",
+                table: "Soloist",
+                column: "RoleArtistId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ticket_ConcertId",
@@ -357,10 +518,16 @@ namespace ArenaGestor.DataAccess.Migrations
                 name: "ArtistBand");
 
             migrationBuilder.DropTable(
+                name: "ConcertProtagonist");
+
+            migrationBuilder.DropTable(
                 name: "RoleUser");
 
             migrationBuilder.DropTable(
                 name: "Session");
+
+            migrationBuilder.DropTable(
+                name: "Snack");
 
             migrationBuilder.DropTable(
                 name: "Soloist");
@@ -375,10 +542,10 @@ namespace ArenaGestor.DataAccess.Migrations
                 name: "Role");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "Artist");
 
             migrationBuilder.DropTable(
-                name: "Artist");
+                name: "RoleArtist");
 
             migrationBuilder.DropTable(
                 name: "Concert");
@@ -390,7 +557,16 @@ namespace ArenaGestor.DataAccess.Migrations
                 name: "MusicalProtagonist");
 
             migrationBuilder.DropTable(
+                name: "User");
+
+            migrationBuilder.DropTable(
+                name: "Location");
+
+            migrationBuilder.DropTable(
                 name: "Gender");
+
+            migrationBuilder.DropTable(
+                name: "Countrys");
         }
     }
 }

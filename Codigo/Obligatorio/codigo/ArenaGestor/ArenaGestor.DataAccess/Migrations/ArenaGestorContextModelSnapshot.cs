@@ -327,6 +327,31 @@ namespace ArenaGestor.DataAccess.Migrations
                     b.ToTable("Session");
                 });
 
+            modelBuilder.Entity("ArenaGestor.Domain.Snack", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasFilter("[Name] IS NOT NULL");
+
+                    b.ToTable("Snack");
+                });
+
             modelBuilder.Entity("ArenaGestor.Domain.Ticket", b =>
                 {
                     b.Property<Guid>("TicketId")
