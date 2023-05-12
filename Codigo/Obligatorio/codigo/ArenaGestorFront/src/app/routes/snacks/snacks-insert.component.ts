@@ -28,7 +28,6 @@ export class SnacksInsertComponent implements OnInit {
     this.model.name = this.name;
     this.model.description = this.description;
     this.model.price = this.price;
-    console.log(this.price);
     this.service.Insert(this.model).subscribe(
       (res) => {
         this.toastr.success('Snack agregado correctamente', 'Éxito');

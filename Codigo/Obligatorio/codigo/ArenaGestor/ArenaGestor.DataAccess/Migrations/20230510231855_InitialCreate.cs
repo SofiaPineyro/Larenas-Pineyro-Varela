@@ -58,21 +58,6 @@ namespace ArenaGestor.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Snack",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Snack", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "TicketStatus",
                 columns: table => new
                 {
@@ -473,13 +458,6 @@ namespace ArenaGestor.DataAccess.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Snack_Name",
-                table: "Snack",
-                column: "Name",
-                unique: true,
-                filter: "[Name] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Soloist_ArtistId",
                 table: "Soloist",
                 column: "ArtistId");
@@ -525,9 +503,6 @@ namespace ArenaGestor.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Session");
-
-            migrationBuilder.DropTable(
-                name: "Snack");
 
             migrationBuilder.DropTable(
                 name: "Soloist");

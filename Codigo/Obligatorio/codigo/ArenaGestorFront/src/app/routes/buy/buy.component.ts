@@ -42,23 +42,21 @@ export class BuyComponent implements OnInit {
     });
   }
 
-  onChange(event: any){
-      this.totalPrice = event.target.value * this.concertPrice.valueOf();
+  onChange(event: any) {
+    this.totalPrice = event.target.value * this.concertPrice.valueOf();
   }
 
   onSnackAdded(snack: SnackResultDto) {
     this.totalPrice = this.totalPrice.valueOf() + snack.price.valueOf();
-    const snackKey = `${snack.snackId}-${snack.name}`;
+    const snackKey = `${snack.id}-${snack.name}`;
     const existingSnack = this.snacksMap.get(snackKey);
 
     if (existingSnack) {
-      console.log('existe');
       this.snacksMap.set(snackKey, {
         price: existingSnack.price.valueOf() + snack.price.valueOf(),
         quantity: existingSnack.quantity.valueOf() + 1,
       });
     } else {
-      console.log('no existe');
       this.snacksMap.set(snackKey, { price: snack.price, quantity: 1 });
     }
 
@@ -66,7 +64,6 @@ export class BuyComponent implements OnInit {
       key,
       value,
     }));
-    console.log(this.snacksMap);
   }
 
   Confirmar() {
@@ -75,24 +72,26 @@ export class BuyComponent implements OnInit {
     dto.concertId = this.selectedId;
     this.ticketService.Shopping(dto).subscribe(
       (res) => {
-        const payload: Array<{ id: Number; quantity: Number }> = [];
+        const snacks: Array<{ id: Number; quantity: Number }> = [];
         this.snacksMap.forEach((value, key) => {
-          payload.push({
+          snacks.push({
             id: parseInt(key.split('-')[0]),
             quantity: value.quantity,
           });
         });
-        this.snacksService.Buy(payload).subscribe(
-          (res2) => {
-            this.toastr.success('Ticket comprado con ID: ' + res.ticketId);
-          },
-          (error) => {
-            this.toastr.error(
-              'Se han comprado los tickets, pero la compra de snacks ha fallado con error' +
-                error.error
-            );
-          }
-        );
+        snacks.forEach((snack) => {
+          this.snacksService.Buy(snack).subscribe(
+            (res2) => {
+              this.toastr.success('Ticket comprado con ID: ' + res.ticketId);
+            },
+            (error) => {
+              this.toastr.error(
+                'Se han comprado los tickets, pero la compra de snacks ha fallado con error' +
+                  error.error
+              );
+            }
+          );
+        });
       },
       (error) => {
         this.toastr.error(error.error);

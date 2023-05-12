@@ -19,11 +19,8 @@ export class SnacksService {
     return this.http.get<Array<SnackResultDto>>(this.apiUrl);
   }
 
-  Buy(
-    snacks: Array<{ id: Number; quantity: Number }>
-  ): Observable<Array<SnackResultDto>> {
-    const payload = JSON.stringify(snacks);
-    return this.http.post<Array<SnackResultDto>>(this.apiUrl + '/buy', payload);
+  Buy(snack: { id: Number; quantity: Number }): Observable<SnackResultDto> {
+    return this.http.post<SnackResultDto>(this.apiUrl + '/buy', snack);
   }
 
   Insert(snack: SnackInsertDto): Observable<SnackResultDto> {

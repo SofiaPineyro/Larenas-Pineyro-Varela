@@ -22,13 +22,13 @@
       <td>
         <div *ngIf="role === 'Administrador'">
           <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteSnack"
-            (click)="SetSnackToDelete(snack.snackId)">Borrar</button>
+            (click)="SetSnackToDelete(snack.id)">Borrar</button>
         </div>
         <div *ngIf="role === 'Espectador'">
           <button type="button" class="btn btn-primary btn-sm" (click)="AddSnack(snack)">Agregar</button>
         </div>
       </td>
-      <td scope="col">{{snack.snackId}}</td>
+      <td scope="col">{{snack.id}}</td>
       <td scope="col">{{snack.name}}</td>
       <td scope="col">{{snack.description}}</td>
       <td scope="col">{{snack.price}}</td>

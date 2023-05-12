@@ -9,52 +9,61 @@ import { ConcertUpdateConcertDto } from '../models/Concerts/ConcertUpdateConcert
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ConcertService {
-
-  private apiUrl: string
+  private apiUrl: string;
 
   constructor(private http: HttpClient) {
-    this.apiUrl = environment.apiURL + "concerts"
+    this.apiUrl = environment.apiURL + 'concerts';
   }
 
   ParamsFilters(filter?: ConcertGetConcertsDto): string {
-    let params = "";
+    let params = '';
 
     if (filter) {
       if (filter.tourName.length > 0) {
-        params = "?tourName=" + filter.tourName
+        params = '?tourName=' + filter.tourName;
       }
       if (filter.upcoming) {
         if (params.length > 0) {
-          params = params + "&"
+          params = params + '&';
+        } else {
+          params = '?';
         }
-        else {
-          params = "?"
-        }
-        params = params + "upcoming=" + filter.upcoming
+        params = params + 'upcoming=' + filter.upcoming;
       }
-      if (filter.dateRange && filter.dateRange.startDate && filter.dateRange.endDate) {
+      if (
+        filter.dateRange &&
+        filter.dateRange.startDate &&
+        filter.dateRange.endDate
+      ) {
         if (params.length > 0) {
-          params = params + "&"
+          params = params + '&';
+        } else {
+          params = '?';
         }
-        else {
-          params = "?"
-        }
-        params = params + "dateRange.startDate=" + this.ParseDte(filter.dateRange.startDate)
-        params = params + "&dateRange.endDate=" + this.ParseDte(filter.dateRange.endDate)
+        params =
+          params +
+          'dateRange.startDate=' +
+          this.ParseDte(filter.dateRange.startDate);
+        params =
+          params +
+          '&dateRange.endDate=' +
+          this.ParseDte(filter.dateRange.endDate);
       }
     }
     return params;
   }
 
-  Get(filter: ConcertGetConcertsDto): Observable<Array<ConcertResultConcertDto>> {
+  Get(
+    filter: ConcertGetConcertsDto
+  ): Observable<Array<ConcertResultConcertDto>> {
     let url = this.apiUrl;
 
     url = url + this.ParamsFilters(filter);
 
-    return this.http.get<Array<ConcertResultConcertDto>>(url)
+    return this.http.get<Array<ConcertResultConcertDto>>(url);
   }
 
   ParseDte(date: Date): string {
@@ -63,32 +72,41 @@ export class ConcertService {
 
   GetUpcoming(): Observable<Array<ConcertResultConcertDto>> {
     let url = this.apiUrl;
-    let params = "?upcoming=" + true;
+    let params = '?upcoming=' + true;
     url = url + params;
 
-    return this.http.get<Array<ConcertResultConcertDto>>(url)
+    return this.http.get<Array<ConcertResultConcertDto>>(url);
   }
 
-  GetByArtist(filter?: ConcertGetConcertsDto): Observable<Array<ConcertResultConcertArtistDto>> {
+  GetByArtist(
+    filter?: ConcertGetConcertsDto
+  ): Observable<Array<ConcertResultConcertArtistDto>> {
     let params = this.ParamsFilters(filter);
 
-    return this.http.get<Array<ConcertResultConcertArtistDto>>(this.apiUrl + "/ByArtist" + params)
+    return this.http.get<Array<ConcertResultConcertArtistDto>>(
+      this.apiUrl + '/ByArtist' + params
+    );
   }
 
   GetById(id: Number): Observable<ConcertResultConcertDto> {
-    return this.http.get<ConcertResultConcertDto>(this.apiUrl + "/" + id.toString())
+    return this.http.get<ConcertResultConcertDto>(
+      this.apiUrl + '/' + id.toString()
+    );
   }
 
-  Insert(concert: ConcertInsertConcertDto): Observable<ConcertResultConcertDto> {
-    return this.http.post<ConcertResultConcertDto>(this.apiUrl, concert)
+  Insert(
+    concert: ConcertInsertConcertDto
+  ): Observable<ConcertResultConcertDto> {
+    return this.http.post<ConcertResultConcertDto>(this.apiUrl, concert);
   }
 
-  Update(concert: ConcertUpdateConcertDto): Observable<ConcertResultConcertDto> {
-    return this.http.put<ConcertResultConcertDto>(this.apiUrl, concert)
+  Update(
+    concert: ConcertUpdateConcertDto
+  ): Observable<ConcertResultConcertDto> {
+    return this.http.put<ConcertResultConcertDto>(this.apiUrl, concert);
   }
 
   Delete(id: Number) {
-    return this.http.delete(this.apiUrl + "/" + id.toString())
+    return this.http.delete(this.apiUrl + '/' + id.toString());
   }
-
 }
