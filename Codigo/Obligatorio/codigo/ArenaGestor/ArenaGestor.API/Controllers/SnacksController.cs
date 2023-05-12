@@ -49,6 +49,16 @@ namespace ArenaGestor.API.Controllers
             return Ok();
         }
 
+        [AuthorizationFilter(RoleCode.Espectador)]
+        [HttpPost("Buy")]
+        public IActionResult PostSnacks([FromBody] BuySnackDto buySnack)
+        {
+            var snackBuy = mapper.Map<Snack>(buySnack);
+            Snack snack = snackService.BuySnack(snackBuy);
+            var resultDto = mapper.Map<SnackResultSnackDto>(snack);
+            return Ok(resultDto);
+        }
+
     }
 
 }
