@@ -6,3 +6,6 @@ Los documentos requeridos para cada entrega se encuentran dentro de la carpeta E
 
 ## Informe de avance 2
 [Carpeta de entrega 2](https://github.com/SofiaPineyro/Larenas-Pineyro-Varela/tree/main/Entregas/Entrega%202)
+
+## Informe de avance 3
+[Carpeta de entrega 3](https://github.com/SofiaPineyro/Larenas-Pineyro-Varela/tree/main/Entregas/Entrega%203)
