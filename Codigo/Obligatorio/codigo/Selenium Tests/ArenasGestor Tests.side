@@ -1,0 +1,107 @@
+{
+  "id": "c958dc85-2b39-43d9-8e99-c1ebd4baff4d",
+  "version": "2.0",
+  "name": "ArenasGestor Tests",
+  "url": "http://localhost:4200",
+  "tests": [{
+    "id": "9dd6e485-8eee-47e0-a3e2-d7097af7fefe",
+    "name": "Issue #9 Test - Can not sign out when logged in as an artists",
+    "commands": [{
+      "id": "e6a7dcb3-fa29-4bb0-9f8e-86c25394999d",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2a5ac954-d9f6-4f66-bccc-cae90cecc4d1",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "982x864",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "78de0f3d-e216-4324-9543-85c02130c597",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn-outline-primary",
+      "targets": [
+        ["css=.btn-outline-primary", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//button", "xpath:position"],
+        ["xpath=//button[contains(.,'Ingresar')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1d95fe8b-a7a7-4541-b051-f966e18891da",
+      "comment": "",
+      "command": "click",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.mb-3:nth-child(2) > .form-control", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d0b8be18-f6de-46b4-9aa1-3e0a9a499a52",
+      "comment": "",
+      "command": "type",
+      "target": "name=email",
+      "targets": [
+        ["name=email", "name"],
+        ["css=.ng-dirty:nth-child(2)", "css:finder"],
+        ["xpath=//input[@name='email']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "kurt@example.com"
+    }, {
+      "id": "0387a9b0-10f3-4aba-b80f-b62b39b7dda5",
+      "comment": "",
+      "command": "click",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.ng-untouched", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "89c66d7f-f515-41ed-9d08-42467bcc39e0",
+      "comment": "",
+      "command": "type",
+      "target": "name=password",
+      "targets": [
+        ["name=password", "name"],
+        ["css=.ng-untouched", "css:finder"],
+        ["xpath=//input[@name='password']", "xpath:attributes"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "test"
+    }, {
+      "id": "e1bb6d73-566a-4339-8015-320d0cbdbbdd",
+      "comment": "",
+      "command": "click",
+      "target": "css=.w-100",
+      "targets": [
+        ["css=.w-100", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Login')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "09738018-00c6-4571-8387-424be0f605af",
+    "name": "",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["9dd6e485-8eee-47e0-a3e2-d7097af7fefe"]
+  }],
+  "urls": ["http://localhost:4200/"],
+  "plugins": []
+}
